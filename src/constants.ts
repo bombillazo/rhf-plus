@@ -4,6 +4,9 @@ export const EVENTS = {
   FOCUS: 'focus',
   FOCUS_IN: 'focusin',
   CHANGE: 'change',
+  SUBMIT: 'submit',
+  TRIGGER: 'trigger',
+  VALID: 'valid',
 } as const;
 
 export const VALIDATION_MODE = {
@@ -23,3 +26,7 @@ export const INPUT_VALIDATION_RULES = {
   required: 'required',
   validate: 'validate',
 } as const;
+
+export const FORM_ERROR_TYPE = 'form';
+
+export const ROOT_ERROR_TYPE = 'root';
