@@ -20,6 +20,16 @@ body:
       description: Please provide a link to a minimal reproduction of the bug using a tool like [CodeSandbox](https://codesandbox.io/). This helps us to quickly identify and fix the issue.
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        V7
+        - [JS](https://codesandbox.io/p/sandbox/react-hook-form-v7-js-kn8g63) Template
+        - [TS](https://codesandbox.io/p/sandbox/happy-rgb-kps3dv) Template
+
+        V6
+        - [JS](https://codesandbox.io/s/mystifying-keller-5jwf5) Template
+        - [TS](https://codesandbox.io/s/romantic-moon-0chz7) Template
   - type: textarea
     id: what-happened
     attributes:
