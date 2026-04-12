@@ -4,6 +4,7 @@ describe('isWatched', () => {
   it('should return watched fields', () => {
     expect(
       isWatched('', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -17,6 +18,7 @@ describe('isWatched', () => {
 
     expect(
       isWatched('test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -32,6 +34,7 @@ describe('isWatched', () => {
   it('should return true when watched with parent node', () => {
     expect(
       isWatched('test.test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -45,6 +48,7 @@ describe('isWatched', () => {
 
     expect(
       isWatched('test.test.test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -58,6 +62,7 @@ describe('isWatched', () => {
 
     expect(
       isWatched('test.test.test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -71,6 +76,7 @@ describe('isWatched', () => {
 
     expect(
       isWatched('test.0', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -84,6 +90,7 @@ describe('isWatched', () => {
 
     expect(
       isWatched('test.0.test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -99,6 +106,7 @@ describe('isWatched', () => {
   it("should return false when watched with parent node that doesn't match child name", () => {
     expect(
       isWatched('test.test.test', {
+        registerName: new Set(),
         mount: new Set(),
         disabled: new Set(),
         readonly: new Set(),
@@ -117,6 +125,7 @@ describe('isWatched', () => {
         readonly: new Set(),
         unMount: new Set(),
         array: new Set(),
+        registerName: new Set(),
         watch: new Set(['testFail.test']),
         focus: '',
         watchAll: false,
@@ -132,6 +141,7 @@ describe('isWatched', () => {
           mount: new Set(),
           disabled: new Set(),
           readonly: new Set(),
+          registerName: new Set(),
           unMount: new Set(),
           array: new Set(),
           watch: new Set(),

@@ -181,6 +181,7 @@ export function createFormControl<
     unMount: new Set(),
     array: new Set(),
     watch: new Set(),
+    registerName: new Set(),
   };
   let delayErrorCallback: DelayCallback | null;
   let timer = 0;
@@ -274,6 +275,12 @@ export function createFormControl<
     }
   };
 
+  const _updateDirtyFields = (name: InternalFieldName) => {
+    const fullDirtyFields = getDirtyFields(_defaultValues, _formValues);
+    const rootName = getNodeParentName(name);
+    set(_formState.dirtyFields, rootName, get(fullDirtyFields, rootName));
+  };
+
   const _setFieldArray: BatchFieldArrayUpdate = (
     name,
     values = [],
@@ -317,9 +324,7 @@ export function createFormControl<
       }
 
       if (_proxyFormState.dirtyFields || _proxySubscribeFormState.dirtyFields) {
-        const fullDirtyFields = getDirtyFields(_defaultValues, _formValues);
-        const rootName = getNodeParentName(name);
-        set(_formState.dirtyFields, rootName, get(fullDirtyFields, rootName));
+        _updateDirtyFields(name);
       }
 
       _subjects.state.next({
@@ -901,9 +906,11 @@ export function createFormControl<
           _proxySubscribeFormState.isDirtySinceSubmit) &&
         options.shouldDirty
       ) {
+        _updateDirtyFields(name);
+
         _subjects.state.next({
           name,
-          dirtyFields: getDirtyFields(_defaultValues, _formValues),
+          dirtyFields: _formState.dirtyFields,
           isDirty: _getDirty(name, cloneValue),
           ...((_formState.isSubmitted || _hasBeenSubmitted) &&
           !_formState.isDirtySinceSubmit
@@ -1469,6 +1476,8 @@ export function createFormControl<
       isBoolean(options.disabled) ||
       isBoolean(_options.disabled) ||
       Array.isArray(_options.disabled);
+    const shouldRevalidateRemount =
+      !_names.registerName.has(name) && field && !field._f.mount;
 
     set(_fields, name, {
       ...(field || {}),
@@ -1481,7 +1490,7 @@ export function createFormControl<
     });
     _names.mount.add(name);
 
-    if (field) {
+    if (field && !shouldRevalidateRemount) {
       _setDisabledField({
         disabled: isBoolean(options.disabled)
           ? options.disabled
@@ -1520,7 +1529,9 @@ export function createFormControl<
       onFocus: onChange,
       ref: (ref: HTMLInputElement | null): void => {
         if (ref) {
+          _names.registerName.add(name);
           register(name, options);
+          _names.registerName.delete(name);
           field = get(_fields, name);
 
           const fieldRef = isUndefined(ref.value)
@@ -1818,6 +1829,7 @@ export function createFormControl<
       mount: keepStateOptions.keepDirtyValues ? _names.mount : new Set(),
       unMount: new Set(),
       array: new Set(),
+      registerName: new Set(),
       disabled: new Set(),
       readonly: new Set(),
       watch: new Set(),

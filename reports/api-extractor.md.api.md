@@ -100,7 +100,7 @@ export type ControllerProps<TFieldValues extends FieldValues = FieldValues, TNam
 }) & UseControllerProps<TFieldValues, TName, TTransformedValues>;
 
 // @public
-export type ControllerRender<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>> = ({ field, fieldState, formState, }: {
+export type ControllerRender<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>> = (input: {
     field: ControllerRenderProps<TFieldValues, TName>;
     fieldState: ControllerFieldState;
     formState: UseFormStateReturn<TFieldValues>;
@@ -291,14 +291,14 @@ export type FormProps<TFieldValues extends FieldValues, TTransformedValues = TFi
     control: Control<TFieldValues, any, TTransformedValues>;
     headers: Record<string, string>;
     validateStatus: (status: number) => boolean;
-    onError: ({ response, error, }: {
+    onError: (input: {
         response: Response;
         error?: undefined;
     } | {
         response?: undefined;
         error: unknown;
     }) => void;
-    onSuccess: ({ response }: {
+    onSuccess: (input: {
         response: Response;
     }) => void;
     onSubmit: FormSubmitHandler<TTransformedValues>;
@@ -365,7 +365,7 @@ export type FormStateSubjectRef<TFieldValues extends FieldValues> = Subject<Part
 }>;
 
 // @public (undocumented)
-export const FormStateSubscribe: <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>({ control, disabled, exact, name, render, }: FormStateSubscribeProps<TFieldValues, TTransformedValues>) => ReactNode;
+export const FormStateSubscribe: <TFieldValues extends FieldValues, TTransformedValues = TFieldValues>(input: FormStateSubscribeProps<TFieldValues, TTransformedValues>) => ReactNode;
 
 // @public (undocumented)
 export type FormStateSubscribeProps<TFieldValues extends FieldValues, TTransformedValues = TFieldValues> = UseFormStateProps<TFieldValues, TTransformedValues> & {
@@ -498,6 +498,7 @@ export type Names = {
     readonly: InternalNameSet;
     array: InternalNameSet;
     watch: InternalNameSet;
+    registerName: InternalNameSet;
     focus?: InternalFieldName;
     watchAll?: boolean;
 };
