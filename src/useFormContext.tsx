@@ -120,54 +120,52 @@ export const FormProvider = <
     submit,
   } = props;
 
+  const memoizedValue = React.useMemo(
+    () => ({
+      watch,
+      getValues,
+      getFieldState,
+      setError,
+      clearErrors,
+      setValue,
+      trigger,
+      formState,
+      resetField,
+      reset,
+      handleSubmit,
+      unregister,
+      control,
+      register,
+      setFocus,
+      subscribe,
+      id,
+      submit,
+    }),
+    [
+      clearErrors,
+      control,
+      formState,
+      getFieldState,
+      getValues,
+      handleSubmit,
+      id,
+      register,
+      reset,
+      resetField,
+      setError,
+      setFocus,
+      setValue,
+      submit,
+      subscribe,
+      trigger,
+      unregister,
+      watch,
+    ],
+  );
+
   return (
-    <HookFormContext.Provider
-      value={
-        React.useMemo(
-          () => ({
-            watch,
-            getValues,
-            getFieldState,
-            setError,
-            clearErrors,
-            setValue,
-            trigger,
-            formState,
-            resetField,
-            reset,
-            handleSubmit,
-            unregister,
-            control,
-            register,
-            setFocus,
-            subscribe,
-            id,
-            submit,
-          }),
-          [
-            clearErrors,
-            control,
-            formState,
-            getFieldState,
-            getValues,
-            handleSubmit,
-            id,
-            register,
-            reset,
-            resetField,
-            setError,
-            setFocus,
-            setValue,
-            submit,
-            subscribe,
-            trigger,
-            unregister,
-            watch,
-          ],
-        ) as unknown as UseFormReturn
-      }
-    >
-      <HookFormControlContext.Provider value={control as Control}>
+    <HookFormContext.Provider value={memoizedValue as unknown as UseFormReturn}>
+      <HookFormControlContext.Provider value={memoizedValue.control as Control}>
         {children}
       </HookFormControlContext.Provider>
     </HookFormContext.Provider>
