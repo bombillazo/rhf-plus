@@ -100,20 +100,11 @@ export type ControllerProps<TFieldValues extends FieldValues = FieldValues, TNam
 }) & UseControllerProps<TFieldValues, TName, TTransformedValues>;
 
 // @public
-export type ControllerRender<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>> = ({ field, fieldState, formState, }: {
+export type ControllerRender<TFieldValues extends FieldValues, TName extends FieldPath<TFieldValues>> = (input: {
     field: ControllerRenderProps<TFieldValues, TName>;
     fieldState: ControllerFieldState;
     formState: UseFormStateReturn<TFieldValues>;
 }) => React_2.ReactElement;
-
-// @public
-export type ControllerProps<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>, TTransformedValues = TFieldValues> = {
-    render: (input: {
-        field: ControllerRenderProps<TFieldValues, TName>;
-        fieldState: ControllerFieldState;
-        formState: UseFormStateReturn<TFieldValues>;
-    }) => React_2.ReactElement;
-} & UseControllerProps<TFieldValues, TName, TTransformedValues>;
 
 // @public (undocumented)
 export type ControllerRenderProps<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>> = {
